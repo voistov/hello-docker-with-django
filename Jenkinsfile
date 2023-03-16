@@ -1,3 +1,9 @@
+def build = "hello_django"
+
+def aws_acc = "974730308621"
+
+def aws_reg = "eu-central-1"
+
 pipeline {
     agent any
     options {
@@ -15,7 +21,7 @@ pipeline {
         stage('Build') { 
             steps { 
                 script{
-                 app = docker.build("hello_django")
+                 app = docker.build("${build}")
                 }
             }
         }
@@ -27,7 +33,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 script{
-                        docker.withRegistry('https://974730308621.dkr.ecr.eu-central-1.amazonaws.com/docker-images', 'ecr:eu-central-1:aws-credentials') {
+                        docker.withRegistry('https://$(aws_acc).dkr.ecr.$(aws_reg).amazonaws.com/docker-images', 'ecr:$(aws_reg):aws-credentials') {
                     app.push("${env.BUILD_NUMBER}")
                     app.push("latest")
                     }
