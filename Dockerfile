@@ -20,6 +20,6 @@ RUN pip install pipenv && pipenv install --system
 COPY . /code/
 RUN chmod +x /code/run.sh
 
-EXPOSE 8000
+EXPOSE 80
 
 CMD ["/code/run.sh"]
